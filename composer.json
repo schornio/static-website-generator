@@ -1,0 +1,26 @@
+{
+  "authors": [
+    {
+      "email": "thomas@schorn.io",
+      "name": "Thomas Schorn"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "SchornIO\\StaticWebsiteGenerator\\": "src"
+    }
+  },
+  "bin": [
+    "sio-swg-compile"
+  ],
+  "description": "Generates files from Handlebar-Templates on the server",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "name": "schornio/static-website-generator",
+  "require": {
+    "erusev/parsedown": "^1.7",
+    "guzzlehttp/guzzle": "^6.3",
+    "zordius/lightncandy": "^1.2"
+  },
+  "type": "library"
+}
