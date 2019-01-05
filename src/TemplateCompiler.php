@@ -42,7 +42,7 @@
         'echo' => HandlebarsHelpers::echo(),
         'toJSON' => HandlebarsHelpers::toJSON(),
         'markdown' => HandlebarsHelpers::markdown(),
-        'getStory' => HandlebarsHelpers::getStory(),
+        // 'getStory' => HandlebarsHelpers::getStory(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);
