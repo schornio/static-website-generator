@@ -41,8 +41,9 @@
       $helpers = Array(
         'echo' => HandlebarsHelpers::echo(),
         'toJSON' => HandlebarsHelpers::toJSON(),
+        'useDynamic' => HandlebarsHelpers::useDynamic(),
         'markdown' => HandlebarsHelpers::markdown(),
-        // 'getStory' => HandlebarsHelpers::getStory(),
+        'getStory' => HandlebarsHelpers::getStory(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);

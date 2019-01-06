@@ -2,6 +2,12 @@
 
   class FileSystemHelpers {
 
+    public static function createDirectory (string $path) {
+
+      mkdir($path, 0775, true);
+
+    }
+
     public static function deleteFileOrDirectory (string $path) {
 
       if (is_dir($path)) {
@@ -39,8 +45,6 @@
       }
 
       $subPaths = glob("$realPath/*");
-
-      var_dump($subPaths);
 
       foreach ($subPaths as $subPath) {
 

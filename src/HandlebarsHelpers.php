@@ -37,8 +37,6 @@
 
       return function ($context, $options) {
 
-        require("vendor/autoload.php");
-
         $parsedown = new Parsedown();
 
         return $parsedown->text($context);
@@ -47,23 +45,32 @@
 
     }
 
-    // public static function getStory () {
-    //
-    //   return function ($options) {
-    //
-    //     require("vendor/autoload.php");
-    //
-    //     $root = $options["data"]["root"];
-    //     $config = $options["data"]["root"]["_sio_config"];
-    //
-    //     $client = new SchornIO\StaticServer\Storyblok($config["version"], $config["token"]);
-    //     $story = $client->getStoryBySlug($options["hash"]["getBySlug"]);
-    //
-    //     $options["_this"][$options["hash"]["assign"]] = $story["story"];
-    //
-    //   };
-    //
-    // }
+    public static function getStory () {
+
+      return function ($options) {
+
+        $root = $options["data"]["root"];
+        $config = $options["data"]["root"]["config"];
+
+        $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
+        $story = $client->getStoryBySlug($options["hash"]["getBySlug"]);
+
+        $options["_this"][$options["hash"]["assign"]] = $story["story"];
+
+      };
+
+    }
+
+    public static function useDynamic () {
+
+      return function ($options) {
+
+        global $renderDynamicContent;
+        $renderDynamicContent = true;
+
+      };
+
+    }
 
   }
 

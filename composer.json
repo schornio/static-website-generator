@@ -11,7 +11,8 @@
     }
   },
   "bin": [
-    "sio-swg-compile"
+    "sio-swg-compile",
+    "sio-swg-render"
   ],
   "description": "Generates files from Handlebar-Templates on the server",
   "license": "MIT",
