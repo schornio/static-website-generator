@@ -32,3 +32,7 @@ $data = json_decode("{{{toJSON data}}}");
 
 ?>
 ```
+
+## Special slug `--fileextension-`
+
+If a slug contains `(filename)--fileextension-(extension)` the file will be stored as `(filename).(extension)`. Eg `sitemap--fileextension-xml` will be converted to `sitemap.xml`

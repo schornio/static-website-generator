@@ -21,12 +21,25 @@
 
       foreach ($data["stories"] as $story) {
 
+        $fileName = "/index.html";
         $fullSlug = "/" . $story["full_slug"];
+
         if ($fullSlug == "/home") {
 
           $fullSlug = "";
 
-        } else {
+        }
+
+        $specialSlugMatch = null;
+
+        if (preg_match("/(.*)?(\/[\w-]*)--fileextension-(\w+)$/", $fullSlug, $specialSlugMatch)) {
+
+          $fullSlug = $specialSlugMatch[1];
+          $fileName = $specialSlugMatch[2] . "." . $specialSlugMatch[3];
+
+        }
+
+        if ($fullSlug != "") {
 
           FileSystemHelpers::createDirectory($distPath . $fullSlug);
 
@@ -53,8 +66,6 @@
         $renderDynamicContent = false;
 
         $renderedStory = $renderer($renderData);
-
-        $fileName = "/index.html";
 
         if ($renderDynamicContent) {
 

@@ -16,7 +16,9 @@ foreach ([
 
 require(COMPOSER_INSTALL);
 
-$output = SchornIO\StaticWebsiteGenerator\TemplateCompiler::compile();
+$templateIndex = file_get_contents("php://stdin");
+
+$output = SchornIO\StaticWebsiteGenerator\TemplateCompiler::compile($templateIndex);
 
 echo($output);
 
