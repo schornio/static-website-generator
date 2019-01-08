@@ -17,13 +17,13 @@ foreach ([
 require(COMPOSER_INSTALL);
 
 $optionParameter  = [
-    "version:",
+    "tokenVersion:",
     "token:",
 ];
 
 $options = getopt("", $optionParameter);
 
-$output = SchornIO\StaticWebsiteGenerator\TemplateRenderer::renderAndSaveAllPages($options["version"], $options["token"]);
+$output = SchornIO\StaticWebsiteGenerator\TemplateRenderer::renderAndSaveAllPages($options["tokenVersion"], $options["token"]);
 
 echo($output);
 
