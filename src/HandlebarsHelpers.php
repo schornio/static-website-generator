@@ -33,6 +33,46 @@
 
     }
 
+    public static function switch () {
+      // FROM: https://github.com/wycats/handlebars.js/issues/927#issuecomment-200784792
+      // (rewritten in php)
+
+      return function ($context, $options) {
+
+        $options["_this"]["_switch_value_"] = $context;
+        $inner = $options["fn"]();
+        unset($options["_this"]["_switch_value_"]);
+        return $inner;
+
+      };
+
+    }
+
+    public static function case () {
+      // FROM: https://github.com/wycats/handlebars.js/issues/927#issuecomment-200784792
+      // (rewritten in php)
+
+      return function () {
+
+        $args = func_get_args();
+
+        $options = array_pop($args);
+        $value = $options["_this"]["_switch_value_"];
+
+        if (in_array($value, $args)) {
+
+          return $options["fn"]();
+
+        } else {
+
+          return "";
+
+        }
+
+      };
+
+    }
+
     public static function markdown () {
 
       return function ($context, $options) {

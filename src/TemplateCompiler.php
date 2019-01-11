@@ -41,6 +41,8 @@
       $helpers = Array(
         'echo' => HandlebarsHelpers::echo(),
         'toJSON' => HandlebarsHelpers::toJSON(),
+        'switch' => HandlebarsHelpers::switch(),
+        'case' => HandlebarsHelpers::case(),
         'useDynamic' => HandlebarsHelpers::useDynamic(),
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),
