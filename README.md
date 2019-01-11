@@ -13,6 +13,8 @@ composer require schornio/static-website-generator
 
 - `echo`
 - `toJSON`
+- `switch`
+- `case`
 - `useDynamic`
 - `markdown`
 - `getStory`
