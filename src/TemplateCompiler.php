@@ -46,6 +46,7 @@
         'useDynamic' => HandlebarsHelpers::useDynamic(),
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),
+        'url' => HandlebarsHelpers::url(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);

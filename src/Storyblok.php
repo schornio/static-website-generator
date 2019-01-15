@@ -14,6 +14,11 @@
         "http_errors" => false,
       ]);
 
+      $this->linkClient = new Client([
+        "base_uri" => "https://api.storyblok.com/v1/cdn/links/",
+        "http_errors" => false,
+      ]);
+
     }
 
     public function getStoryBySlug ($slug, $options = []) {
@@ -34,6 +39,29 @@
 
         $data = json_decode((string)$response->getBody(), true);
         return $data;
+
+      }
+
+      return null;
+
+    }
+
+    public function getLinkById ($linkId, $options = []) {
+
+      $options["token"] = $this->token;
+
+      $response = $this->linkClient->request(
+        "GET",
+        $linkId,
+        [
+          "query" => $options
+        ]
+      );
+
+      if ($response->getStatusCode() == 200) {
+
+        $data = json_decode((string)$response->getBody(), true);
+        return $data["link"];
 
       }
 

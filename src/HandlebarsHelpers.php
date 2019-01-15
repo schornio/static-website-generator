@@ -89,13 +89,38 @@
 
       return function ($options) {
 
-        $root = $options["data"]["root"];
         $config = $options["data"]["root"]["config"];
 
         $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
         $story = $client->getStoryBySlug($options["hash"]["getBySlug"]);
 
         $options["_this"][$options["hash"]["assign"]] = $story["story"];
+
+      };
+
+    }
+
+    public static function url () {
+
+      return function ($context, $options) {
+
+        if ($context["linktype"] === "url") {
+
+          return $context["url"];
+
+        }
+
+        if ($context["linktype"] === "story") {
+
+
+            $config = $options["data"]["root"]["config"];
+
+            $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
+            $link = $client->getLinkById($context["id"]);
+
+            return "/" . $link["slug"];
+
+        }
 
       };
 
