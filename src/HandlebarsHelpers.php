@@ -126,6 +126,18 @@
 
     }
 
+    public static function resize () {
+
+      return function ($image, $param) {
+
+        $imageService = "//img2.storyblok.com/";
+        $resource = str_replace("//a.storyblok.com", "", $image);
+        return $imageService . $param . $resource;
+
+      };
+
+    }
+
     public static function useDynamic () {
 
       return function ($options) {

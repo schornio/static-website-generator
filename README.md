@@ -19,6 +19,7 @@ composer require schornio/static-website-generator
 - `markdown`
 - `getStory`
 - `url`
+- `resize`
 - (`storyblokBridge`)
 
 ## Difference between static (`.html`) and dynamic (`.php`) content

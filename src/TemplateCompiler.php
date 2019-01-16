@@ -47,6 +47,7 @@
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),
         'url' => HandlebarsHelpers::url(),
+        'resize' => HandlebarsHelpers::resize(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);
