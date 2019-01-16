@@ -16,7 +16,7 @@
       $client = new Storyblok($version, $token);
       $data = $client->getAllStories();
 
-      $excludePaths = [ "public", "private" ];
+      $excludePaths = [ "public", "private", ".htaccess" ];
       FileSystemHelpers::cleanupDirectory($distPath, $excludePaths);
 
       foreach ($data["stories"] as $story) {
@@ -65,7 +65,7 @@
         global $renderDynamicContent;
         $renderDynamicContent = false;
 
-        $renderedStory = $renderer($renderData);
+        $renderedStory = ltrim($renderer($renderData));
 
         if ($renderDynamicContent) {
 
@@ -74,6 +74,62 @@
         }
 
         file_put_contents($distPath . $fullSlug . $fileName, $renderedStory);
+
+      }
+
+    }
+
+    public static function renderPage (
+      string $version,
+      string $token,
+      string $distPath = "./dist"
+    ) {
+
+      $distPath = realpath($distPath);
+
+      $rendererPath = realpath("$distPath/private/render.php");
+      $renderer = require_once($rendererPath);
+
+      $client = new Storyblok($version, $token);
+      $slug = Storyblok::getCurrentSlug();
+      $data = $client->getStoryBySlug($slug);
+
+      $story = $data["story"];
+
+      $config = [
+        "token" => $token,
+        "version" => $version,
+      ];
+
+      $renderData = [
+        "story" => $story,
+        "config" => $config,
+      ];
+
+      if ($version == "draft") {
+
+        $renderData["storyblokBridge"] = Storyblok::getStoryblokBridge($token);
+
+      }
+
+      // Better solutions welcome
+      global $renderDynamicContent;
+      $renderDynamicContent = false;
+
+      $renderedStory = ltrim($renderer($renderData));
+
+      if ($renderDynamicContent) {
+
+        $tmpFileName = tempnam("/tmp", "sio-swg-renderer");
+        file_put_contents($tmpFileName, $renderedStory);
+
+        require($tmpFileName);
+
+        unlink($tmpFileName);
+
+      } else {
+
+        echo($renderedStory);
 
       }
 

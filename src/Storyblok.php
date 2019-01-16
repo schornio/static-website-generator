@@ -75,6 +75,36 @@
 
     }
 
+    public static function getCurrentSlug () {
+
+      $url = $_SERVER['REQUEST_URI'];
+      $urlObject = parse_url($url);
+
+      $path = $urlObject["path"];
+
+      $slug = substr($path, 1); // remove leading "/"
+
+      if ($slug == "") {
+        $slug = "home";
+      }
+
+      return $slug;
+
+    }
+
+    public function validateRequest($credentials, $previewToken) {
+
+      $spaceId = $credentials["space_id"];
+      $timestamp =  $credentials["timestamp"];
+
+      $validateToken = $credentials["token"];
+
+      return
+        $validateToken === sha1("$spaceId:$previewToken:$timestamp") &&
+        abs(time() - intval($timestamp)) < 60;
+
+    }
+
     public static function getStoryblokBridge ($previewToken) {
 
         $storyblokBridgeHTML = "\n";
