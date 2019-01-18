@@ -101,7 +101,7 @@
 
       return
         $validateToken === sha1("$spaceId:$previewToken:$timestamp") &&
-        abs(time() - intval($timestamp)) < 60;
+        abs(time() - intval($timestamp)) < 60 * 60;
 
     }
 
