@@ -130,9 +130,17 @@
 
       return function ($image, $param) {
 
-        $imageService = "//img2.storyblok.com/";
-        $resource = str_replace("//a.storyblok.com", "", $image);
-        return $imageService . $param . $resource;
+        $isSvg = substr($image, -4) === ".svg"; // ".svg".length === 4
+
+        if (!$isSvg) {
+
+          $imageService = "//img2.storyblok.com/";
+          $resource = str_replace("//a.storyblok.com", "", $image);
+          return $imageService . $param . $resource;
+
+        }
+
+        return $image;
 
       };
 
@@ -144,6 +152,24 @@
 
         global $renderDynamicContent;
         $renderDynamicContent = true;
+
+      };
+
+    }
+
+    public static function resolveSlug () {
+
+      return function ($slug) {
+
+        if ($slug === "home") {
+
+          return "";
+
+        } else {
+
+          return $slug;
+
+        }
 
       };
 
