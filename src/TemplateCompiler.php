@@ -40,6 +40,7 @@
 
       $helpers = Array(
         'echo' => HandlebarsHelpers::echo(),
+        'join' => HandlebarsHelpers::join(),
         'toJSON' => HandlebarsHelpers::toJSON(),
         'switch' => HandlebarsHelpers::switch(),
         'case' => HandlebarsHelpers::case(),

@@ -12,6 +12,35 @@
 
     }
 
+    public static function join () {
+
+      return function ($context, $options) {
+
+        if (is_array($context)) {
+
+          $delimiter = " ";
+
+          if (isset($options) &&
+              isset($options["hash"]) &&
+              isset($options["hash"]["delimiter"]))
+          {
+
+            $delimiter = $options["hash"]["delimiter"];
+
+          }
+
+          return implode($delimiter, $context);
+
+        } else {
+
+          return $context;
+
+        }
+
+      };
+
+    }
+
     public static function toJSON () {
 
       return function ($context, $options) {

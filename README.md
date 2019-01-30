@@ -12,6 +12,7 @@ composer require schornio/static-website-generator
 ## Handlebar helpers
 
 - `echo`
+- `join`
 - `toJSON`
 - `switch`
 - `case`
