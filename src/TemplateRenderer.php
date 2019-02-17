@@ -14,12 +14,12 @@
       $renderer = require_once($rendererPath);
 
       $client = new Storyblok($version, $token);
-      $data = $client->getAllStories();
+      $stories = $client->getAllStories();
 
       $excludePaths = [ "public", "private", ".htaccess" ];
       FileSystemHelpers::cleanupDirectory($distPath, $excludePaths);
 
-      foreach ($data["stories"] as $story) {
+      foreach ($stories as $story) {
 
         $fileName = "/index.html";
         $fullSlug = "/" . $story["full_slug"];
@@ -91,10 +91,8 @@
       $renderer = require_once($rendererPath);
 
       $client = new Storyblok($version, $token);
-      $slug = Storyblok::getCurrentSlug();
-      $data = $client->getStoryBySlug($slug);
-
-      $story = $data["story"];
+      $slug = Storyblok::getSlug($_SERVER['REQUEST_URI']);
+      $story = $client->getStoryBySlug($slug);
 
       $config = [
         "token" => $token,
