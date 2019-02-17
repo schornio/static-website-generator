@@ -19,6 +19,7 @@ composer require schornio/static-website-generator
 - `useDynamic`
 - `markdown`
 - `getStory`
+- `getStories`
 - `url`
 - `resize`
 - `resolveSlug`
