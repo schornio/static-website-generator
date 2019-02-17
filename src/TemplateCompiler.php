@@ -42,6 +42,7 @@
         'echo' => HandlebarsHelpers::echo(),
         'join' => HandlebarsHelpers::join(),
         'toJSON' => HandlebarsHelpers::toJSON(),
+        'toAlphaNum' => HandlebarsHelpers::toAlphaNum(),
         'switch' => HandlebarsHelpers::switch(),
         'case' => HandlebarsHelpers::case(),
         'useDynamic' => HandlebarsHelpers::useDynamic(),

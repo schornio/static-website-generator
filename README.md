@@ -14,6 +14,7 @@ composer require schornio/static-website-generator
 - `echo`
 - `join`
 - `toJSON`
+- `toAlphaNum`
 - `switch`
 - `case`
 - `useDynamic`

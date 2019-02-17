@@ -41,6 +41,16 @@
 
     }
 
+    public static function toAlphaNum () {
+
+      return function ($context, $options) {
+
+        return preg_replace("/[^0-9a-zA-Z]/", "", $context);
+
+      };
+
+    }
+
     public static function toJSON () {
 
       return function ($context, $options) {
