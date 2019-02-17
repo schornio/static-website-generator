@@ -23,6 +23,7 @@ composer require schornio/static-website-generator
 - `url`
 - `resize`
 - `resolveSlug`
+- `renderTimestamp`
 - (`storyblokBridge`)
 
 ## Difference between static (`.html`) and dynamic (`.php`) content
