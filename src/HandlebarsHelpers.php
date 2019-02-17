@@ -119,11 +119,50 @@
       return function ($options) {
 
         $config = $options["data"]["root"]["config"];
-
         $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
-        $story = $client->getStoryBySlug($options["hash"]["getBySlug"]);
 
-        $options["_this"][$options["hash"]["assign"]] = $story["story"];
+        if (isset($options["hash"]["getBySlug"])) {
+
+          $story = $client->getStoryBySlug($options["hash"]["getBySlug"]);
+          $options["_this"][$options["hash"]["assign"]] = $story;
+
+        } else if (isset($options["hash"]["getById"])) {
+
+          $link = $client->getLinkById($options["hash"]["getById"]);
+          $story = $client->getStoryBySlug($link["slug"]);
+          $options["_this"][$options["hash"]["assign"]] = $story;
+
+        }
+
+      };
+
+    }
+
+    public static function getStories () {
+
+      return function ($options) {
+
+        $config = $options["data"]["root"]["config"];
+        $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
+
+        if (isset($options["hash"]["startsWithSlug"])) {
+
+          $slug = $options["hash"]["startsWithSlug"];
+          $stories = $client->getStoriesStartingWithSlug($slug);
+          $options["_this"][$options["hash"]["assign"]] = $stories;
+
+        } else if (isset($options["hash"]["getByTags"])) {
+
+          $tags = $options["hash"]["getByTags"];
+          $stories = $client->getStoriesByTags(explode(",", $tags));
+          $options["_this"][$options["hash"]["assign"]] = $stories;
+
+        } else {
+
+          $stories = $client->getAllStories();
+          $options["_this"][$options["hash"]["assign"]] = $stories;
+
+        }
 
       };
 
@@ -133,23 +172,29 @@
 
       return function ($context, $options) {
 
-        if ($context["linktype"] === "url") {
+        if (isset($context) && isset($context["linktype"])) {
 
-          return $context["url"];
+          if ($context["linktype"] === "url") {
+
+            return $context["url"];
+
+          }
+
+          if ($context["linktype"] === "story") {
+
+
+              $config = $options["data"]["root"]["config"];
+
+              $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
+              $link = $client->getLinkById($context["id"]);
+
+              return "/" . $link["slug"];
+
+          }
 
         }
 
-        if ($context["linktype"] === "story") {
-
-
-            $config = $options["data"]["root"]["config"];
-
-            $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
-            $link = $client->getLinkById($context["id"]);
-
-            return "/" . $link["slug"];
-
-        }
+        return "";
 
       };
 

@@ -47,6 +47,7 @@
         'useDynamic' => HandlebarsHelpers::useDynamic(),
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),
+        'getStories' => HandlebarsHelpers::getStories(),
         'url' => HandlebarsHelpers::url(),
         'resize' => HandlebarsHelpers::resize(),
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
