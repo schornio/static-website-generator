@@ -51,6 +51,7 @@
         'url' => HandlebarsHelpers::url(),
         'resize' => HandlebarsHelpers::resize(),
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
+        'renderTimestamp' => HandlebarsHelpers::renderTimestamp(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);

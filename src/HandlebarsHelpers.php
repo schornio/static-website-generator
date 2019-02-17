@@ -249,6 +249,16 @@
 
     }
 
+    public static function renderTimestamp () {
+
+      return function () {
+
+        return floor(microtime(true) * 1000);
+
+      };
+
+    }
+
   }
 
 ?>
