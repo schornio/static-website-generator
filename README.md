@@ -7,6 +7,7 @@ composer require schornio/static-website-generator
 ## Scripts
 
 - **sio-swg-compile**: compiles `./components` to stdout php-script
+- **sio-swg-generator**: each component has the opportunity to run a script at render time (`generator.php`, `function <component_name>_generator ()`)
 - **sio-swg-render**: overwrites `./dist` with given Storyblok content
 
 ## Handlebar helpers

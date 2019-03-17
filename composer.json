@@ -12,6 +12,7 @@
   },
   "bin": [
     "sio-swg-compile",
+    "sio-swg-generator",
     "sio-swg-render"
   ],
   "description": "Generates files from Handlebar-Templates on the server",
