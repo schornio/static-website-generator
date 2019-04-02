@@ -8,6 +8,8 @@
       string $distPath = "./dist"
     ) {
 
+      $renderStartDate = new \DateTime();
+
       $distPath = realpath($distPath);
 
       $rendererPath = realpath("$distPath/private/render.php");
@@ -17,7 +19,7 @@
       $stories = $client->getAllStories();
 
       $excludePaths = [ "public", "private", ".htaccess" ];
-      FileSystemHelpers::cleanupDirectory($distPath, $excludePaths);
+      $fileActionLog = FileSystemHelpers::cleanupDirectory($distPath, $excludePaths);
 
       foreach ($stories as $story) {
 
@@ -41,7 +43,8 @@
 
         if ($fullSlug != "") {
 
-          FileSystemHelpers::createDirectory($distPath . $fullSlug);
+          $fileActionResult = FileSystemHelpers::createDirectory($distPath . $fullSlug);
+          array_push($fileActionLog, $fileActionResult);
 
         }
 
@@ -73,9 +76,19 @@
 
         }
 
-        file_put_contents($distPath . $fullSlug . $fileName, $renderedStory);
+        $fileActionResult = FileSystemHelpers::createFile($distPath . $fullSlug . $fileName, $renderedStory);
+        array_push($fileActionLog, $fileActionResult);
 
       }
+
+      $renderEndDate = new \DateTime();
+      $deployLogString = json_encode([
+        "renderStart" => $renderStartDate->format("c.u"),
+        "renderFinished" => $renderEndDate->format("c.u"),
+        "renderDuration" => $renderEndDate->diff($renderStartDate)->format("%I:%S.%F"),
+        "fileActions" => $fileActionLog,
+      ], JSON_PRETTY_PRINT);
+      FileSystemHelpers::createFile("$distPath/private/deploy.log.json", $deployLogString);
 
     }
 

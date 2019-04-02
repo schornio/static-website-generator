@@ -2,13 +2,31 @@
 
   class FileSystemHelpers {
 
+    public static function createFile(string $path, string $content) {
+
+      $result = file_put_contents($path, $content);
+      return [
+        "action" => "file_put_contents",
+        "result" => $result,
+        "path" => $path,
+      ];
+
+    }
+
     public static function createDirectory (string $path) {
 
-      mkdir($path, 0775, true);
+      $result = mkdir($path, 0775, true);
+      return [
+        "action" => "mkdir",
+        "result" => $result,
+        "path" => $path,
+      ];
 
     }
 
     public static function deleteFileOrDirectory (string $path) {
+
+      $actionLog = [];
 
       if (is_dir($path)) {
 
@@ -16,19 +34,32 @@
 
         foreach ($subPaths as $subPath) {
 
-          FileSystemHelpers::deleteFileOrDirectory($subPath);
+          $subActionLog = FileSystemHelpers::deleteFileOrDirectory($subPath);
+          $actionLog = array_merge($actionLog, $subActionLog);
 
         }
 
-        rmdir($path);
+        $result = rmdir($path);
+        array_push($actionLog, [
+          "action" => "rmdir",
+          "result" => $result,
+          "path" => $path,
+        ]);
 
       }
 
       if (is_file($path)) {
 
-        unlink($path);
+        $result = unlink($path);
+        array_push($actionLog, [
+          "action" => "unlink",
+          "result" => $result,
+          "path" => $path,
+        ]);
 
       }
+
+      return $actionLog;
 
     }
 
@@ -44,17 +75,21 @@
 
       }
 
+      $actionLog = [];
       $subPaths = glob("$realPath/*");
 
       foreach ($subPaths as $subPath) {
 
         if (!in_array($subPath, $realExcludePaths)) {
 
-          FileSystemHelpers::deleteFileOrDirectory($subPath);
+          $subActionLog = FileSystemHelpers::deleteFileOrDirectory($subPath);
+          $actionLog = array_merge($actionLog, $subActionLog);
 
         }
 
       }
+
+      return $actionLog;
 
     }
 
