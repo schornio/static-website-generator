@@ -120,6 +120,7 @@
         $options["cv"] = floor(microtime(true) * 1000);
         $options["version"] = $this->version;
         $options["token"] = $this->token;
+        $options["per_page"] = 100;
 
         $response = $client->request(
           "GET",
@@ -169,6 +170,7 @@
         $options["cv"] = floor(microtime(true) * 1000);
         $options["version"] = $this->version;
         $options["token"] = $this->token;
+        $options["per_page"] = 100;
 
         $response = $client->request(
           "GET",

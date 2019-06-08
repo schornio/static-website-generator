@@ -45,6 +45,7 @@
         'toAlphaNum' => HandlebarsHelpers::toAlphaNum(),
         'switch' => HandlebarsHelpers::switch(),
         'case' => HandlebarsHelpers::case(),
+        'default' => HandlebarsHelpers::default(),
         'useDynamic' => HandlebarsHelpers::useDynamic(),
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),

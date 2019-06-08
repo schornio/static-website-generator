@@ -79,8 +79,10 @@
       return function ($context, $options) {
 
         $options["_this"]["_switch_value_"] = $context;
+        $options["_this"]["_switch_break_"] = false;
         $inner = $options["fn"]();
         unset($options["_this"]["_switch_value_"]);
+        unset($options["_this"]["_switch_break_"]);
         return $inner;
 
       };
@@ -99,6 +101,32 @@
         $value = $options["_this"]["_switch_value_"];
 
         if (in_array($value, $args)) {
+
+          $options["_this"]["_switch_break_"] = true;
+          return $options["fn"]();
+
+        } else {
+
+          return "";
+
+        }
+
+      };
+
+    }
+
+    public static function default () {
+      // FROM: https://github.com/wycats/handlebars.js/issues/927#issuecomment-200784792
+      // (rewritten in php)
+
+      return function () {
+
+        $args = func_get_args();
+
+        $options = array_pop($args);
+        $break = $options["_this"]["_switch_break_"];
+
+        if ($break == false) {
 
           return $options["fn"]();
 
@@ -218,8 +246,8 @@
 
         if (!$isSvg) {
 
-          $imageService = "//img2.storyblok.com/";
-          $resource = str_replace("//a.storyblok.com", "", $image);
+          $imageService = "/public/images/";
+          $resource = str_replace("//a.storyblok.com", "/a.storyblok.com", $image);
           return $imageService . $param . $resource;
 
         }

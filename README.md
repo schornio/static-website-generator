@@ -28,6 +28,14 @@ composer require schornio/static-website-generator
 - `renderTimestamp`
 - (`storyblokBridge`)
 
+## Image Processor must be located at `public/images`
+
+```
+RewriteCond %{REQUEST_URI} ^/public/images/.+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ public/imageProcessor.php [L]
+```
+
 ## Difference between static (`.html`) and dynamic (`.php`) content
 
 The hbs-helper `{{useDynamic}}` markes a template as dynamic content. If at least one template in the render-chain is marked as dynamic then the resulting file will end in `.php` instead of `.html`.

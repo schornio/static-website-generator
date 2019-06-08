@@ -2,6 +2,28 @@
 
   class FileSystemHelpers {
 
+    public static function mimeTypeFromPath (string $path) {
+
+      preg_match("/\.([^\.]+)$/", $path, $pathComponents);
+
+      $extension = strtolower($pathComponents[1]);
+
+      switch ($extension) {
+
+        case "jpg":
+        case "jpeg":
+          return "image/jpeg";
+
+        case "png":
+          return "image/png";
+
+        default:
+          return "";
+
+      }
+
+    }
+
     public static function createFile(string $path, string $content) {
 
       $result = file_put_contents($path, $content);
@@ -15,7 +37,14 @@
 
     public static function createDirectory (string $path) {
 
-      $result = mkdir($path, 0775, true);
+      $result = "exists";
+
+      if (!is_dir($path)) {
+
+        $result = @mkdir($path, 0775, true);
+
+      }
+
       return [
         "action" => "mkdir",
         "result" => $result,
@@ -30,7 +59,8 @@
 
       if (is_dir($path)) {
 
-        $subPaths = glob("$path/*");
+        // https://stackoverflow.com/a/49031383
+        $subPaths = glob("$path/{*,.[!.]*,..?*}", GLOB_BRACE);
 
         foreach ($subPaths as $subPath) {
 
@@ -76,7 +106,8 @@
       }
 
       $actionLog = [];
-      $subPaths = glob("$realPath/*");
+      // https://stackoverflow.com/a/49031383
+      $subPaths = glob("$realPath/{*,.[!.]*,..?*}", GLOB_BRACE);
 
       foreach ($subPaths as $subPath) {
 
