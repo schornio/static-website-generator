@@ -90,7 +90,7 @@
 
           if ($resizeWidth < $imageWidth && $resizeHeight < $imageHeight) {
 
-            $image = imagescale($image, $resizeWidth, $resizeHeight);
+            $image = imagescale($image, $resizeWidth, $resizeHeight, IMG_BESSEL);
 
           }
 
@@ -116,8 +116,8 @@
       switch ($fileType) {
 
         case "image/jpeg":
-          imagejpeg($image, $imageRelativePath);
-          imagejpeg($image);;
+          imagejpeg($image, $imageRelativePath, 95);
+          imagejpeg($image, NULL, 95);
           break;
 
         case "image/png":
