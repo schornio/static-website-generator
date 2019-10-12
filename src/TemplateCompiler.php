@@ -4,7 +4,7 @@
 
   class TemplateCompiler {
 
-    private function getComponentTemplates(string $componentBasePath) {
+    private static function getComponentTemplates(string $componentBasePath) {
 
       $partials = [];
       $componentRealBasePath = realpath($componentBasePath);
