@@ -347,10 +347,10 @@
             isset($options["hash"]) &&
             isset($options["hash"]["exact"]) &&
             $options["hash"]["exact"] === true &&
-            $url === $currentSlug
+            $url !== $currentSlug
         ) {
 
-          return $options["fn"]();
+          return "";
 
         }
 
