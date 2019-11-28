@@ -183,7 +183,13 @@
         $config = $options["data"]["root"]["config"];
         $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
 
-        if (isset($options["hash"]["startsWithSlug"])) {
+        if (isset($options["hash"]["withSlug"])) {
+
+          $slug = $options["hash"]["withSlug"];
+          $stories = $client->getStoriesWithSlug($slug);
+          $options["_this"][$options["hash"]["assign"]] = $stories;
+
+        } else if(isset($options["hash"]["startsWithSlug"])) {
 
           $slug = $options["hash"]["startsWithSlug"];
           $stories = $client->getStoriesStartingWithSlug($slug);
