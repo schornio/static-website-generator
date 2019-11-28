@@ -49,6 +49,28 @@
 
     }
 
+    public function getStoriesWithSlug ($slug, $options = []) {
+
+      $stories = $this->getCachedStories();
+      $storiesWithSlug = [];
+
+      $slugLength = strlen($slug);
+
+      foreach ($stories as $story) {
+
+        if (substr($story["full_slug"], 0, $slugLength) === $slug) {
+          $pathWithoutSlug = substr($story["full_slug"], $slugLength);
+          if (strpos($pathWithoutSlug, "/") === FALSE) {
+            array_push($storiesWithSlug, $story);
+          }
+        }
+
+      }
+
+      return $storiesWithSlug;
+
+    }
+
     public function getStoriesStartingWithSlug ($slug, $options = []) {
 
       $stories = $this->getCachedStories();
@@ -106,49 +128,66 @@
 
     }
 
+    private function getStoriesFromAPI($page = 1, $perPage = 100) {
+      if ($page > 10) {
+        // max 1000 records
+        return [];
+      }
+
+      $client = new Client([
+        "base_uri" => "https://api.storyblok.com/v1/cdn/stories/",
+        "http_errors" => false,
+      ]);
+
+      $slug = "";
+
+      $options["cv"] = floor(microtime(true) * 1000);
+      $options["version"] = $this->version;
+      $options["token"] = $this->token;
+      $options["per_page"] = $perPage;
+      $options["page"] = $page;
+
+      $response = $client->request(
+        "GET",
+        $slug,
+        [
+          "query" => $options
+        ]
+      );
+
+      if ($response->getStatusCode() == 200) {
+
+        $data = json_decode((string)$response->getBody(), true);
+
+        if (is_array($data["stories"])) {
+
+          $stories = $data["stories"];
+
+          foreach ($stories as &$story) {
+
+            $story["full_slug"] = Storyblok::getSlug($story["full_slug"]);
+
+          }
+
+          if (count($stories) === $perPage) {
+            return array_merge($stories, $this->getStoriesFromAPI($page + 1, $perPage));
+          } else {
+            return $stories;
+          }
+
+        }
+
+      }
+
+      return [];
+
+    }
+
     private function getCachedStories () {
 
       if (Storyblok::$storyCache === null) {
 
-        $client = new Client([
-          "base_uri" => "https://api.storyblok.com/v1/cdn/stories/",
-          "http_errors" => false,
-        ]);
-
-        $slug = "";
-
-        $options["cv"] = floor(microtime(true) * 1000);
-        $options["version"] = $this->version;
-        $options["token"] = $this->token;
-        $options["per_page"] = 100;
-
-        $response = $client->request(
-          "GET",
-          $slug,
-          [
-            "query" => $options
-          ]
-        );
-
-        if ($response->getStatusCode() == 200) {
-
-          $data = json_decode((string)$response->getBody(), true);
-
-          if (is_array($data["stories"])) {
-
-            $stories = $data["stories"];
-
-            foreach ($stories as &$story) {
-
-              $story["full_slug"] = Storyblok::getSlug($story["full_slug"]);
-
-            }
-
-            Storyblok::$storyCache = $stories;
-
-          }
-
-        }
+        Storyblok::$storyCache = $this->getStoriesFromAPI();
 
       }
 
