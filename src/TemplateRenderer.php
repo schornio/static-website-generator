@@ -56,6 +56,7 @@
         $renderData = [
           "story" => $story,
           "config" => $config,
+          "slug" => "/" . $story["full_slug"],
         ];
 
         if ($version == "draft") {
@@ -115,6 +116,7 @@
       $renderData = [
         "story" => $story,
         "config" => $config,
+        "slug" => "/$slug",
       ];
 
       if ($version == "draft") {

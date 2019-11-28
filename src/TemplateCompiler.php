@@ -41,6 +41,7 @@
       $helpers = Array(
         'echo' => HandlebarsHelpers::echo(),
         'join' => HandlebarsHelpers::join(),
+        'replace' => HandlebarsHelpers::replace(),
         'toJSON' => HandlebarsHelpers::toJSON(),
         'toAlphaNum' => HandlebarsHelpers::toAlphaNum(),
         'switch' => HandlebarsHelpers::switch(),
@@ -53,6 +54,7 @@
         'url' => HandlebarsHelpers::url(),
         'resize' => HandlebarsHelpers::resize(),
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
+        'isActiveStory' => HandlebarsHelpers::isActiveStory(),
         'renderTimestamp' => HandlebarsHelpers::renderTimestamp(),
       );
 
