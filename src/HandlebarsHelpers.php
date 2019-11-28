@@ -51,6 +51,29 @@
 
     }
 
+    public static function replace () {
+
+      return function ($context, $options) {
+
+        if (isset($options) &&
+            isset($options["hash"]) &&
+            isset($options["hash"]["with"]))
+        {
+
+          $search = $context;
+          $replace = $options["hash"]["with"];
+          $subject = $options["fn"]();
+
+          return str_replace($search, $replace, $subject);
+
+        }
+
+        return "";
+
+      };
+
+    }
+
     public static function toJSON () {
 
       return function ($context, $options) {
