@@ -316,6 +316,54 @@
 
     }
 
+    public static function isActiveStory () {
+
+      return function ($context, $options) {
+
+        $currentSlug = $options["data"]["root"]["slug"];
+        $url = $context;
+
+        if (isset($options) &&
+            isset($options["hash"]) &&
+            isset($options["hash"]["isUrl"]) &&
+            $options["hash"]["isUrl"] === true
+        ) {
+
+          $config = $options["data"]["root"]["config"];
+
+          $client = new SchornIO\StaticWebsiteGenerator\Storyblok($config["version"], $config["token"]);
+          $link = $client->getLinkById($context["id"]);
+
+          $url = "/" . $link["slug"];
+
+        }
+
+        // Ignore trailing `/`
+        if (substr($url, strlen($url) - 1, 1) === '/') {
+          $url = substr($url, 0, strlen($url) - 1);
+        }
+
+        if (isset($options) &&
+            isset($options["hash"]) &&
+            isset($options["hash"]["exact"]) &&
+            $options["hash"]["exact"] === true &&
+            $url === $currentSlug
+        ) {
+
+          return $options["fn"]();
+
+        }
+
+        if (substr($currentSlug, 0, strlen($url)) === $url) {
+
+          return $options["fn"]();
+
+        }
+
+      };
+
+    }
+
     public static function renderTimestamp () {
 
       return function () {
