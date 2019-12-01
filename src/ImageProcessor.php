@@ -28,7 +28,6 @@
 
           case "image/png":
             $image = imagecreatefrompng("http://" . $origin . "/" . $originPath);
-            imagesavealpha($image, true);
             break;
 
           default:
@@ -64,11 +63,11 @@
 
             $image = imagecrop($image, [
 
-              "x" => $cropX,
-              "y" => $cropY,
+              "x" => floor($cropX),
+              "y" => floor($cropY),
 
-              "width" => $cropWidth,
-              "height" => $cropHeight,
+              "width" => floor($cropWidth),
+              "height" => floor($cropHeight),
 
             ]);
 
@@ -90,7 +89,17 @@
 
           if ($resizeWidth < $imageWidth && $resizeHeight < $imageHeight) {
 
-            $image = imagescale($image, $resizeWidth, $resizeHeight, IMG_BESSEL);
+            // `dimensions + 1` because of resizing artifacts: 1px black border right and bottom
+            $image = imagescale($image, floor($resizeWidth) + 1, floor($resizeHeight) + 1, IMG_BESSEL);
+            $image = imagecrop($image, [
+
+              "x" => 0,
+              "y" => 0,
+
+              "width" => floor($resizeWidth),
+              "height" => floor($resizeHeight),
+
+            ]);
 
           }
 
@@ -121,6 +130,9 @@
           break;
 
         case "image/png":
+          imagealphablending($image, false);
+          imagesavealpha($image, true);
+
           imagepng($image, $imageRelativePath);
           imagepng($image);
           break;
