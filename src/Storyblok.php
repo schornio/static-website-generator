@@ -187,8 +187,12 @@
 
       if (Storyblok::$storyCache === null) {
 
-        Storyblok::$storyCache = $this->getStoriesFromAPI();
+        $links = $this->getCachedLinks();
+        $stories = $this->getStoriesFromAPI();
 
+        $sortedStories = Storyblok::sortStoriesByStoryblokOrder($stories, $links);
+
+        Storyblok::$storyCache = $sortedStories;
       }
 
       return Storyblok::$storyCache;
@@ -273,6 +277,75 @@
 
         return $storyblokBridgeHTML;
 
+    }
+
+    public static function sortStoriesByStoryblokOrder ($storyArray, $linkArray) {
+      $folderPositionMap = [];
+
+      foreach ($linkArray as $link) {
+        if ($link["is_folder"]) {
+          $folderPositionMap[$link["slug"]] = $link["position"];
+        }
+      }
+
+      $storyPositionArray = [];
+
+      foreach ($storyArray as $story) {
+        $storySlugComponentArray = explode("/", $story["full_slug"]);
+
+        if (!$story["is_startpage"]) {
+          array_pop($storySlugComponentArray);
+        }
+
+        $currentStoryPositionArray = [];
+        $currentParentSlug = "";
+
+        foreach ($storySlugComponentArray as $storySlugComponent) {
+          $currentParentSlug .= $storySlugComponent;
+
+          $position = $folderPositionMap[$currentParentSlug];
+          array_push($currentStoryPositionArray, $position);
+
+          $currentParentSlug .= "/";
+        }
+
+        array_push($currentStoryPositionArray, $story["position"]);
+
+        $storyPosition = [
+          "story" => $story,
+          "positionArray" => $currentStoryPositionArray,
+        ];
+
+        array_push($storyPositionArray, $storyPosition);
+      }
+
+      usort($storyPositionArray, function ($storyPositionA, $storyPositionB) {
+        $positionArrayA = $storyPositionA["positionArray"];
+        $positionArrayB = $storyPositionB["positionArray"];
+        $positionArrayALength = count($positionArrayA);
+
+        for ($i=0; $i < $positionArrayALength; $i++) {
+          if (isset($positionArrayB[$i])) {
+            if ($positionArrayA[$i] === $positionArrayB[$i]) {
+              continue;
+            } else {
+              return $positionArrayA[$i] - $positionArrayB[$i];
+            }
+          } else {
+            return 1;
+          }
+        }
+
+        return 0;
+      });
+
+      $sortedStoryArray = [];
+
+      foreach ($storyPositionArray as $storyPosition) {
+        array_push($sortedStoryArray, $storyPosition["story"]);
+      }
+
+      return $sortedStoryArray;
     }
 
   }
