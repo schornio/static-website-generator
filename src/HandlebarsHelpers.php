@@ -374,6 +374,16 @@
 
     }
 
+    public static function storyblokToken () {
+
+      return function ($options) {
+
+        return $options["data"]["root"]["config"]["token"];
+
+      };
+
+    }
+
   }
 
 ?>

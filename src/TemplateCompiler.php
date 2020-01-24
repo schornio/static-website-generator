@@ -56,6 +56,7 @@
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
         'isActiveStory' => HandlebarsHelpers::isActiveStory(),
         'renderTimestamp' => HandlebarsHelpers::renderTimestamp(),
+        'storyblokToken' => HandlebarsHelpers::storyblokToken(),
       );
 
       $partials = TemplateCompiler::getComponentTemplates($componentsPath);
