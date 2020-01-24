@@ -28,6 +28,7 @@ composer require schornio/static-website-generator
 - `resolveSlug`
 - `isActiveStory`
 - `renderTimestamp`
+- `storyblokToken`
 - (`storyblokBridge`)
 
 ## Image Processor must be located at `public/images`
