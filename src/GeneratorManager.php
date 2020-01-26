@@ -13,7 +13,6 @@
       $generatorPaths = glob("$componentBasePath/**/generator.php");
 
       $client = new Storyblok($version, $token);
-      $stories = $client->getAllStories();
 
       foreach ($generatorPaths as $generatorPath) {
 
@@ -24,7 +23,7 @@
         $generatorFunction = $componentName . "_generator";
 
         require($generatorPath);
-        $generatorFunction($distPath, $stories);
+        $generatorFunction($distPath, $client);
 
       }
 
