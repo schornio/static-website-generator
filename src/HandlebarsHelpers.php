@@ -235,6 +235,17 @@
 
     }
 
+    public static function getCurrentStory () {
+
+      return function ($options) {
+
+        $currentStory = $options["data"]["root"]["story"];
+        $options["_this"][$options["hash"]["assign"]] = $currentStory;
+
+      };
+
+    }
+
     public static function url () {
 
       return function ($context, $options) {

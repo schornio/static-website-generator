@@ -23,6 +23,7 @@ composer require schornio/static-website-generator
 - `markdown`
 - `getStory`
 - `getStories`
+- `getCurrentStory`
 - `url`
 - `resize`
 - `resolveSlug`

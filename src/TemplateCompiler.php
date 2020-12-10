@@ -51,6 +51,7 @@
         'markdown' => HandlebarsHelpers::markdown(),
         'getStory' => HandlebarsHelpers::getStory(),
         'getStories' => HandlebarsHelpers::getStories(),
+        'getCurrentStory' => HandlebarsHelpers::getCurrentStory(),
         'url' => HandlebarsHelpers::url(),
         'resize' => HandlebarsHelpers::resize(),
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
