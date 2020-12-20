@@ -58,6 +58,7 @@
         'textToSlug' => HandlebarsHelpers::textToSlug(),
         'isActiveStory' => HandlebarsHelpers::isActiveStory(),
         'renderTimestamp' => HandlebarsHelpers::renderTimestamp(),
+        'formatDate' => HandlebarsHelpers::formatDate(),
         'storyblokToken' => HandlebarsHelpers::storyblokToken(),
       );
 

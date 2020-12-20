@@ -413,6 +413,28 @@
 
     }
 
+    public static function formatDate () {
+
+      return function ($context, $options) {
+
+        $timestamp = strtotime($context);
+
+        $format = $options["hash"]["format"] ?? "%c";
+        $locale = $options["hash"]["locale"] ?? "de_DE.UTF8";
+
+        $globalLocale = setlocale(LC_TIME, 0);
+
+        setlocale(LC_TIME, $locale);
+        $dateString = strftime($format, $timestamp);
+
+        setlocale(LC_TIME, $globalLocale);
+
+        return $dateString;
+
+      };
+
+    }
+
     public static function storyblokToken () {
 
       return function ($options) {
