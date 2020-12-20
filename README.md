@@ -30,6 +30,7 @@ composer require schornio/static-website-generator
 - `textToSlug`
 - `isActiveStory`
 - `renderTimestamp`
+- `formatDate`
 - `storyblokToken`
 - (`storyblokBridge`)
 
