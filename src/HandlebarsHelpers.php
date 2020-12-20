@@ -327,6 +327,34 @@
 
     }
 
+    public static function textToSlug () {
+
+      return function ($context) {
+        $serialized = strtolower($context);
+        $serialized = trim($serialized);
+
+        // Replace German umlauts
+        $serialized = preg_replace("/[Ää]/u", "ae", $serialized);
+        $serialized = preg_replace("/[Öö]/u", "oe", $serialized);
+        $serialized = preg_replace("/[Üü]/u", "ue", $serialized);
+        $serialized = preg_replace("/[ß]/u", "ss", $serialized);
+
+        // Replace spaces with "-"
+        $serialized = preg_replace("/[ ]+/", "-", $serialized);
+
+        // Remove any non ASCII Letter, non "-"
+        $serialized = preg_replace("/[^\w-]+/", "", $serialized);
+
+        // Remove duplicate, leading and tailing "-"
+        $serialized = preg_replace("/-+/", "-", $serialized);
+        $serialized = preg_replace("/^-/", "", $serialized);
+        $serialized = preg_replace("/-$/", "", $serialized);
+
+        return $serialized;
+      };
+
+    }
+
     public static function isActiveStory () {
 
       return function ($context, $options) {

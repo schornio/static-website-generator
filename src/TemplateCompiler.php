@@ -55,6 +55,7 @@
         'url' => HandlebarsHelpers::url(),
         'resize' => HandlebarsHelpers::resize(),
         'resolveSlug' => HandlebarsHelpers::resolveSlug(),
+        'textToSlug' => HandlebarsHelpers::textToSlug(),
         'isActiveStory' => HandlebarsHelpers::isActiveStory(),
         'renderTimestamp' => HandlebarsHelpers::renderTimestamp(),
         'storyblokToken' => HandlebarsHelpers::storyblokToken(),
