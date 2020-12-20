@@ -27,6 +27,7 @@ composer require schornio/static-website-generator
 - `url`
 - `resize`
 - `resolveSlug`
+- `textToSlug`
 - `isActiveStory`
 - `renderTimestamp`
 - `storyblokToken`
