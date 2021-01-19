@@ -28,6 +28,7 @@
 
           case "image/png":
             $image = imagecreatefrompng("http://" . $origin . "/" . $originPath);
+            imagealphablending($image, false);
             break;
 
           default:
@@ -130,7 +131,6 @@
           break;
 
         case "image/png":
-          imagealphablending($image, false);
           imagesavealpha($image, true);
 
           imagepng($image, $imageRelativePath);

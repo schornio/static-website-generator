@@ -115,7 +115,7 @@
 
     }
 
-    public function validateRequest($credentials, $previewToken) {
+    public static function validateRequest($credentials, $previewToken) {
 
       $spaceId = $credentials["space_id"];
       $timestamp =  $credentials["timestamp"];
