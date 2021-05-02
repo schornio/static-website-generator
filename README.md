@@ -17,8 +17,10 @@ composer require schornio/static-website-generator
 - `replace`
 - `toJSON`
 - `toAlphaNum`
+- `equal`
 - `switch`
 - `case`
+- `split`
 - `useDynamic`
 - `markdown`
 - `getStory`

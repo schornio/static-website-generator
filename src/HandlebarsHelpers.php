@@ -74,6 +74,23 @@
 
     }
 
+    public static function split() {
+      return function ($context, $options) {
+        $result = "";
+        $seperator = "\n";
+        if (
+          isset($options) &&
+          isset($options["hash"]) &&
+          isset($options["hash"]["seperator"])
+        ) {
+  
+          $seperator = $options["hash"]["seperator"];
+        }
+  
+        return explode($seperator, $context);
+      };
+    }
+
     public static function toJSON () {
 
       return function ($context, $options) {
@@ -93,6 +110,12 @@
 
       };
 
+    }
+
+    public static function equal() {
+      return function ($argument1, $argument2) {
+        return $argument1 === $argument2;
+      };
     }
 
     public static function switch () {
@@ -446,5 +469,3 @@
     }
 
   }
-
-?>
