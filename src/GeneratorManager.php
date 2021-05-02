@@ -19,6 +19,7 @@
         $componentNameResult = null;
         preg_match("/([^\/]+)\/generator\.php$/", $generatorPath, $componentNameResult);
         $componentName = $componentNameResult[1];
+        $componentName = str_replace("-", "_", $componentName);
 
         $generatorFunction = $componentName . "_generator";
 
