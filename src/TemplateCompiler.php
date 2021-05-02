@@ -41,9 +41,11 @@
       $helpers = Array(
         'echo' => HandlebarsHelpers::echo(),
         'join' => HandlebarsHelpers::join(),
+        'split' => HandlebarsHelpers::split(),
         'replace' => HandlebarsHelpers::replace(),
         'toJSON' => HandlebarsHelpers::toJSON(),
         'toAlphaNum' => HandlebarsHelpers::toAlphaNum(),
+        'equal' => HandlebarsHelpers::equal(),
         'switch' => HandlebarsHelpers::switch(),
         'case' => HandlebarsHelpers::case(),
         'default' => HandlebarsHelpers::default(),
@@ -76,5 +78,3 @@
     }
 
   }
-
-?>
