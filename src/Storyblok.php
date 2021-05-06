@@ -348,6 +348,26 @@
       return $sortedStoryArray;
     }
 
+    public static function createStory($story, $spaceId, $managementToken)
+    {
+      $client = new Client([
+        "base_uri" => "https://mapi.storyblok.com/",
+        "http_errors" => false,
+      ]);
+      $response = $client->request(
+        "POST",
+        "v1/spaces/$spaceId/stories/",
+        [
+          'json' => ["story" => $story],
+          'headers' => [
+            'Authorization' => $managementToken,
+          ]
+        ]
+      );
+      $statusCode = $response->getStatusCode();
+      return $statusCode === 200 || $statusCode === 201;
+    }
+
   }
 
 ?>
